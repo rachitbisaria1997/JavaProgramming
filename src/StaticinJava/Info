@@ -1,0 +1,2 @@
+1. Static variables and static methods are stored in method area of JVM
+2. Static methods cant be overrided

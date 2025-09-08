@@ -1,0 +1,487 @@
+Just in time compiler
+it improves performance by avoiding repeated interpretation of hot spots. identifies hotspts, converts bytecode into machine code
+and reuse it for fuuture executions ex compute() here
+
+
+public class JITExample{
+
+    psvm(){
+
+        long start = System.nanoTime();
+
+        for(int i=0; i<1000; i++){
+            compute();
+        }
+    }
+}
+
+classpath - tells the JVM where to find the .class files. Helps java locate user defined classes and external dependencies.
+if not set, java loooks in current directory(.)
+java -cp mylibrary.jar MyClass
+// java will look for class MyClass inside this jar file. run the class names MyClass. -cp means class path
+// The JVM looks inside mylibrary.jar for MyClass.class..If found and it contains a public static void main(String[] args) method, that method is executed.
+
+static pgm - code is checked at compile time
+dynammic - code is checked at runtime
+error detection is early at compile time while in dynamic lang its at runtime
+
+Classloading in java ?
+1. finds .class files and loads them when needed
+2. loads class only when needed, saving memory
+3. prevents unauthorized access by controlling class loading
+4. supports loading classes from DB, networks, encrypted files
+
+
+various class loaders - responsible for loading classes into memory at runtime. thy loads compiled .class files (compiled bytecode)
+which jvm can use
+
+they load the .class files compiled bytecode and convert
+
+1. bootstrap classloader - loads core java classes from java.base module
+ex java.lang, java.util, java,io
+
+2. platform classloader - helps in loafing platform classes ex java.sql, java.xml, java.net
+
+3. system classloader - loads clases from custom sources ex network, databases.
+
+class MyClassLoader extends ClassLoader {
+
+    @Override
+    protected Class<?> findClass(String name) throws ClassNotFoundExceptio {
+
+        return super.findClass(name);
+
+    }
+}
+
+java uses parent delegation model to maintain class uniqueness and security
+1. App classloader - receives class request and asks its parent
+2. parent classloader - asks bootstrap classloader to load the class.
+3. bootstrap classloader - loads core java classes ex java.lang.string, java.util.List
+
+this prevents duplicate class loading and ensures that system classes are not overridden
+
+
+java is both compiled and interpreted
+java is compiled into bytecode and then interpreted by the JVM.
+
+java achieved performance optimization :-
+1. java does small optimizations at compile time by dead code elimination.
+2. constant folding
+
+
+java jar file = single package .class file, makes java for easy distribution
+allows running java apps -> java -jar
+
+
+1. creating a jar file easy to package, run
+jar cf MyApp.jar *.class
+java -jar MyApp.jar -> run it
+
+JCP - official process for defining and evolving java standards. new java features are proposed
+
+java release numbering - java 8,10, 21
+
+
+What is object lifecycle
+
+Object creation;
+
+1. object creation Cricket obj = new Cricker();
+2. object in use, obj.addFour();
+3. object becomes unreachable, obj = null;
+4. Garbage collection, System.gc();
+5. finalize() runs before the object is destroyed
+
+
+Jar file is used for packaging and distributing Java apps or libraries while WAR files is
+used for packaging and distributing web apps
+
+Q. what is platform independence ?
+it is build once, run anywhere. once we run a java pgm and jar is created. jar can be run in any OS where JVM is installed
+
+JDK - has java compiler, debugging tools
+JRE - contains libraries, JVM and just in time compiler
+JIT converts byte word into machine eexcutable code
+
+Q.java is platform independent, C++ is not
+c++ has pointers while java jas no pointers
+in c++ programmer has to handle memory mgmt, in java JVM takes care of removing objects from memory using garbage collection
+
+Q. wrapper classes
+wrapper around data and gives object appearance
+Float num = new Float("55.0f");
+Integer num = Integer.valueOf("100");
+
+Autoboxing -converts int to Integer. double to Double
+Integer nineC = 9;
+Integer ten = new Integer(10);
+
+Q. implicit casting
+done by compiler. ex float f = 100;
+explicit casting.
+long num1 = 25678;
+int num = (int)num1;
+
+
+Q. strings are immutable. once created, cant be modified
+String str = "value1";
+str.concat("value2");
+SOP(str)-> value1
+
+String concat = str.concat("value2");
+SOP -> value1value2
+
+Q. where String values are stored in memory
+String str1 = "value";
+String str5 = "value";
+values will be stored in string constant pool. which is inside heap memoy. if it exists, it is reused.
+
+Q> diff between equals and hashcode
+Client client1 = new Client(25);
+Client client2 = new Client(25);
+
+SOP(client1.equals(client2)) - true as both the ID's are same
+
+hashCode() Method - returns an int hashcode.
+if 2 objects are equal accoring to equals(). hashcode() is used to reduce bucket where object might be present
+
+Q. diff between coupling and cohesion
+coupling refers to how dependent are clases on each other
+tight - classes are strongly dependent on each other
+loose - Classes are independent and interact through well-defined interfaces.
+
+class OrderService {
+    private PaymentService paymentService = new PaymentService(); // direct dependency
+
+    public void placeOrder() {
+        paymentService.processPayment();
+    }
+}
+
+interface PaymentProcessor{
+    void processPayment();
+}
+
+class PaymentService implements PaymentProcessor{
+    void processPayment(){
+
+    }
+}
+
+class OrderService{
+
+    private PaymentProcessor paymentProcessor;
+    public OrderService(PaymentProcessot paymentProcessor)
+    {
+        this.paymentProcessor = paymentProcessor;
+    }
+
+    public void placeOrder() {
+        paymentProcessor.processPayment();
+    }
+
+}
+
+Q. what is cohesion
+it refers to how closely related the responsibilities of a single module/class are.
+High cohesion: A class performs a single, well-defined task.
+Low cohesion: A class performs multiple unrelated tasks.
+
+Q. what is static inner class ?
+class declared inside another class and declared as static.
+
+Q. non static Inner class
+class Outer{
+
+    private String msg = "Hello";
+
+    class Inner{
+        void display(){
+            SOP(msg); // can access pvt msg
+        }
+    }
+
+    void showInner()
+    {
+        Inner in = new Inner();
+        in.display();
+    }
+}
+
+Outer outer = new Outer();
+Outer.Inner inner = outer.newInner();
+inner.display();
+
+class Outer{
+    static String staticMsg = "Static Hello";
+
+        static class StaticInner {
+            void display() {
+                System.out.println(staticMsg);
+            }
+    }
+}
+
+Outer.StaticInner inner = new Outer.StaticInner();
+inner.display();
+
+Q. what is anonymous class
+Animal animal = new Animal(){
+   void bark()
+   {
+        SOP("subclass bark");
+   }
+};
+
+animal.bark();
+
+
+Q. dynamic method dispatch
+
+class Animal{
+    void sound()
+    {
+        System.out.println("Animal makes sound");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Dog();  Even though a is an Animal reference, the Dog version of sound() is executed.
+        a.sound();
+    }
+}
+
+Q. static binding, dynamic binding
+static binding is resolved at compile time   int sum(int a, int b).. done by compiler
+dynamic binding is resolved at runtime used in method overriding.. handled by JVM
+
+
+chain of responsibility - passing exception from 1 method to another method
+
+public static void main(String[] args)
+{
+    method1();
+}
+
+private static void method1()
+{
+    method2();
+}
+
+private static void method2(){
+    String str = null;
+    str.toString();
+}
+
+
+exception at method2
+method1
+main
+
+
+Q. scenarios where finally is not executed
+if exception occurs in finally block
+if JVM crashes due to System.exit();
+
+error - when programmer cant do anything about it
+exception - programmers can handle thr exceptions
+
+Q. handling multiple exceptions at once
+
+catch(IOException | SQLException e)
+
+
+Q. printing 1D array
+int marks[] = {25,24,30,10,5};
+SOP(marks);
+
+SOP(Arrays.toString(marks));
+
+Q. printing 2D array
+int[][] matrix = {{1,2,3}, {4,5,6}};
+
+SOP(matrix); prints ID
+SOP(Arrays.toString(matrix));
+
+SOP(Arrays.toString(matrix[0]));
+
+Q. variable arguements
+public int sum(int... numbers)
+{
+    int sum = 0;
+    for(int i : numbers){
+        sum += i;
+    }
+    return sum;
+}
+
+sum(1,3,5);
+sum(1,2,3,4,5);
+
+Q. what is garbage collection
+automatic memory management, aim is to keep as much of heap for program
+JVM removes objects which no longer has refrences from the heap
+
+Q. 2 types of static initializer
+    static initializer - code tht runs when class is loaded
+    instance initializer - code tht runs when new object is created
+
+    public class InitializerExample{
+        static int count;
+        int i;
+
+        static {
+            count = 5;
+            SOP("value os count is "+count);
+        }
+    }
+
+Q. what is instance initializer block
+it runs everytime an object is created. static and instance var can be accessed
+
+class InitializerExample{
+
+    static int count;
+
+    int i;
+    {
+        SOP("instance initializer");
+        i = 6;
+
+    }
+}
+
+Q. List interface is part of Collections framework.
+List<String> fruits = new ArrayList<>();
+
+        // add elements
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Mango");
+
+        // insert at index
+        fruits.add(1, "Orange"); // [Apple, Orange, Banana, Mango]
+
+        // get element
+        System.out.println(fruits.get(2)); // Banana
+
+        // set element
+        fruits.set(2, "Grapes"); // [Apple, Orange, Grapes, Mango]
+
+        // remove by index
+        fruits.remove(3); // [Apple, Orange, Grapes]
+
+        // contains
+        System.out.println(fruits.contains("Apple")); // true
+
+        // indexOf
+        System.out.println(fruits.indexOf("Orange")); // 1
+
+        // size
+        System.out.println("Size: " + fruits.size()); // 3
+
+        // subList
+        List<String> sublist = fruits.subList(0,2); [Apple, Orange]
+
+    ArrayList, Vector and LinkedList implements the List interface
+
+ArrayList insertion and deletion is slow compared to LL
+Vector thread safe, synchronized methods
+LL -> insertion and deletion is fast. iteration is slower than ArrayList.
+
+Q. Queue interface extends Collection
+ has methods like add(), offer(), remove(), poll(), element(), peek()
+
+Dequeue<String> dequeue = new ArrayDequeue<>();
+        deque.addFirst("A");
+        deque.addLast("B");
+        deque.offerFirst("C");
+        deque.offerLast("D");
+
+        System.out.println(deque); // [C, A, B, D]
+
+Q. Priorityqueue order is maintainer in natural order.
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        pq.add(50);
+        pq.add(20);
+        pq.add(30);
+        pq.add(10);
+
+        System.out.println(pq); // Order not guaranteed when printing directly
+
+        // Elements come out in sorted order
+        while (!pq.isEmpty()) {
+            System.out.println(pq.poll()); // 10, 20, 30, 50
+        }
+
+Q. difference between synchronized and concurrent collections
+only 1 thread can access synchronized block at a given time.
+
+Q. what is CopyOnwrite collections approach ?
+it implements List interface. whenvee we modify the list using add(), remove(). a new copy of array is created.
+write operations are thread safe, but slow since new copy is created
+
+class Example{
+
+    psvm()
+    {
+        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+        list.add("A");
+        list.add("B");
+
+        for(String s: list)
+        {
+            SOP(s);
+            list.add("C");
+        }
+    }
+}
+
+Q. what are atomic operations ?
+they complete entirely or not at all. they dont require locks and are safe in multi thread env.
+they don not require locks and safe in multi thread env. only 1 thread can access at a time.
+
+public class AtomicExample{
+
+    private AtomicInteger count = new AtomicInteger(0);
+
+        public void increment() {
+            count.incrementAndGet();  // atomic
+        }
+
+        public int getCount() {
+            return count.get();  // atomic read
+        }
+
+}
+
+class ListGeneric<T>{
+
+    private List<T> values;
+
+    void add(T value)
+    {
+        values.add(value);
+    }
+
+    void remove(T value){
+        values.remove(value);
+    }
+
+    T get(int index)
+    {
+        return values.get(index);
+    }
+
+}
+
