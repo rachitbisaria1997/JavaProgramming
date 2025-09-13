@@ -1,0 +1,64 @@
+1. lambda expression (x, y) -> x + y
+
+2. functional interface Interfaces with exactly one abstract method. Annotated with @FunctionalInterface
+
+3. stream API's
+
+4. Default and Static Methods in Interfaces
+
+interface MyInterface {
+    default void show() { System.out.println("Default method"); }
+    static void log() { System.out.println("Static method"); }
+}
+
+5. method references
+list.forEach(System.out::println);
+
+6. Optional class
+Optional<String> name = Optional.of("John");
+name.ifPresent(System.out::println);
+
+7. new Date and Time API
+LocalDate date = LocalDate.now();
+LocalDateTime dateTime = LocalDateTime.now();
+
+
+various functional interface are:-
+
+Q. Function<T, R>  Takes one argument of type T and returns a result of type R
+
+Function<String, Integer> strLength = str -> str.length();
+System.out.println(strLength.apply("hello"));
+
+
+2. Predicate<T>
+
+Predicate<Integer> isEven = num -> num % 2 == 0;
+System.out.println(isEven.test(4));
+
+3. Consumer<T> Takes one argument and returns nothing (void).
+
+Consumer<String> greet = name -> System.out.println("Hello, " + name);
+greet.accept("rachit");
+
+4. BiFunction<T, U, R>
+
+BiFunction <Integer, Integer, Integer> sum = (a, b) -> a + b;
+
+System.out.prinln(sum.apply(10, 20));
+
+5. BiPredicate<T, U> 	takes two arguments and returns Boolean
+
+BiPredicate<String, Integer> isLengthEqual = (str, len) -> str.length() == len;
+
+SOP(isLengthEqual.test("hello", 5));
+
+6. Consumer<String> greet = name -> System.out.println("Hello, " + name);
+	greet.accept("rachit");
+
+7. it takes 2 arguements nd returns boolean
+  BiPredicate<String, Integer> isLengthEqual = (str, len) -> str.length() == len;
+
+   SOP(isLengthEqual.test("hello", 5));
+
+

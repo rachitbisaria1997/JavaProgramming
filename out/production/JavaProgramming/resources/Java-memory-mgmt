@@ -1,0 +1,427 @@
+Java handles memory automatically, while C (malloc/free) and C++ (new/delete) require the programmer to allocate and release memory.
+
+
+📌 3: Automatic Garbage Collection in Java
+
+What?: Java manages memory automatically, reclaiming unused objects.
+How?: The Garbage Collector (GC) runs periodically to free up memory.
+Example (Java: No Manual Freeing Needed)
+// Memory allocated
+Demo demo = new Demo(10);
+
+memory is allocated using new keyword in java while deallocation is done using garbage collection.
+
+System.out.println("Demo: " + demo);
+
+// No need to manually free memory
+// Once there are no references to an object
+// GC will free the memory
+
+
+Memory leak: A program fails to release unused memory
+
+Causes increased memory usage over time
+
+Can eventually lead to OutOfMemoryError and slow performance
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    // Allocate memory
+    int *ptr = (int*) malloc(sizeof(int));
+
+    *ptr = 10;
+
+    printf("Value: %d\n", *ptr);
+
+    //Programmer forgot to free memory
+    //free(ptr);
+    return 0;
+}
+
+📌 Why Are Memory Leaks Rare in Java?
+
+Garbage Collection (GC): The JVM automatically reclaims unused objects, reducing leaks.
+(Remember) Memory leaks still occur if objects are unintentionally kept in memory
+📌 Examples of Memory Leaks in Java
+
+1: Static Variables Holding References
+
+What?: Static variables persist throughout the program, preventing garbage collection.
+
+private static List<Something> millionObjects
+                        = new ArrayList<>();
+
+//Code to Populate millionObjects with objects
+
+//Objects in millionObjects persist until end of program
+//unless you write code to remove objects from the list!
+
+2: Un-closed Resources (File, Database, Network)
+
+What?: Resources like file streams stay open, causing memory leaks.
+import java.io.*;
+
+public class FileLeakExample {
+    public static void main(String[] args)
+                        throws IOException {
+        FileInputStream file
+                = new FileInputStream("data.txt");
+
+        // No file.close() → Memory leak
+    }
+}
+
+Fix: Use try-with-resources to auto-close resources.
+try (FileInputStream file = new FileInputStream("data.txt")) {
+    // Auto-closed at end of block
+}
+
+How does Garbage Collection work? #
+📌 What?
+
+Garbage Collection: Process where Java automatically removes un-referenced objects from memory.
+📌 How?
+
+If an object has no references, it is unreachable => Object eligible for Garbage Collection (GC).
+Example:
+String str = new String("Hello");
+
+System.out.println(str);
+
+str = null;
+// Object is now unreachable → Eligible for GC
+
+//Other code
+
+📌 When?
+
+The JVM decides when to run GC based on memory usage. (There are many algorithms!)
+You can request GC using System.gc()
+But it is not guaranteed to run immediately
+Memory Spaces in Java #
+Java efficiently manages memory by using
+
+Stack for method calls & local variables
+Heap for objects
+Metaspace for class metadata and
+Code Cache for JIT-compiled machine code
+📌 1: Stack Memory
+
+What? Stores method calls & local variables.
+When? Exists only during method execution.
+Where? Each thread has its own stack.
+Code Example
+New stack frame is created when add(a, b) is called.
+Stack frame is removed when add() finishes, freeing memory.
+public class StackExample {
+    public static void main(String[] args) {
+        int a = 10;  // Stored in Stack
+        int b = 20;  // Stored in Stack
+        add(a, b);   // Creates new Stack Frame
+    }
+
+    static int add(int x, int y) {
+        // Parameters, Local variables stored in Stack
+        int sum = x + y;
+        return sum;
+    }
+}
+
+📌 2: Heap Memory
+
+What? Stores objects.
+Why? Needed for objects where object lifespan is unknown.
+Code Example
+p1 and p2 references are in Stack, but objects exist in Heap.
+Objects persist even after the method call ends, until GC removes them.
+// `p1` in Stack, object in Heap
+Person p1 = new Person("Alice");
+
+// Another object in Heap
+Person p2 = new Person("Bob");
+
+
+📌 3: Metaspace (Replaces PermGen)
+
+What? Stores class metadata
+Stores the class structure (including the constant pool, field, and method data).
+Stores method and constructor code, including static methods.
+When? Holds data until the class is unloaded from JVM.
+
+
+📌 4: Code Cache
+
+What? Stores JIT-compiled machine code for faster execution.
+Why? Reduces repeated bytecode interpretation, improving performance.
+How? Managed by the JVM’s Just-In-Time (JIT) compiler.
+Summary
+
+Stack → Stores local variables & method calls, cleared when methods exit.
+Heap → Stores objects, cleaned by Garbage Collector.
+Metaspace → Holds class metadata.
+Code Cache → Stores JIT-compiled machine code. Reduces repeated bytecode interpretation.
+Comparison: Stack vs Heap Memory #
+Feature	Stack	Heap
+Stores	Local variables, method calls	Objects, instance variables
+Lifespan	Cleared after method exits	Objects remain until GC removes them
+Memory Management	Automatic	Managed by Garbage Collector
+Thread Scope	Each thread has its own stack	Shared among all threads
+Why is GC Complex? #
+📌 Steps in Garbage Collection
+
+Step 1: Marking → Finds objects still in use.
+Step 2: Sweeping → Removes unused objects from memory.
+Step 3: Compacting → Rearranges memory to avoid fragmentation.
+📌 Why is it Complex?
+
+Task	Complexity
+Finding Unused Objects	Objects may be referenced indirectly
+Minimizing Application Pauses	GC involves a lot of work. Doing GC without impacting running applications can be a challenge.
+Avoiding Memory Fragmentation	Free memory may be scattered
+Providing Flexibility	Different applications have different needs
+Reference Counting vs Mark & Sweep #
+📌 1: Reference Counting
+
+What?
+
+Each object has a reference counter: Tracks how many references point to it
+When the count reaches zero, the object is eligible for garbage collection.
+Why?
+
+Simple and fast
+Memory can be freed immediately when no references exist
+Issue?
+
+Fails with circular references → Two objects referencing each other will never be collected.
+Example:
+
+Problem: Even though objA and objB are unreachable, their reference count is still 1, preventing GC.
+Solution: Java does not use Reference Counting
+class A {
+    B b;
+}
+
+class B {
+    A a;
+}
+
+
+//Assume this code in a method
+
+A a = new A(); // objA on Heap refCount = 1
+B b = new B(); // objB on Heap refCount = 1
+
+a.b = b; // objB on Heap refCount increases to 2
+b.a = a; // objA on Heap refCount increases to 2
+
+a = null; // objA on Heap refCount decreases to 1
+b = null; // objB on Heap refCount decreases to 1
+
+// Even though objA and objB are unreachable,
+//their refCount is still 1.
+
+//Lot of other code follows
+
+📌 2: Mark & Sweep
+
+What?
+
+JVM scans the heap and marks objects that are still reachable.
+Unmarked objects are deleted.
+Why?
+
+Avoids circular reference issues.
+How?
+
+STEP 1: Mark Phase – JVM starts from root references and marks all reachable objects
+Active Thread Stack → Local variables in method calls.
+Static Variables → Class-level variables (static int x).
+JNI References → Objects referenced from native C/C++ code.
+STEP 2: Sweep Phase – JVM removes unmarked (unused) objects, reclaiming memory.
+📌 Comparison: Reference Counting vs Mark & Sweep
+
+Feature	Reference Counting	Mark & Sweep
+Concept	Tracks the number of references to each object	Scans memory and marks reachable objects
+Performance	Fast, immediate cleanup	Slower, requires scanning of the heap
+Handles Circular References?	❌ Fails	✅ Works correctly
+Used in Java?	❌ No	✅ Yes
+What Are Generations in Java Garbage Collection? #
+📌 Overview
+
+What? Java’s heap memory is divided into generations – Young and Old.
+Approach: Frequent garbage collection for short-lived objects (Young Generation) and less frequent collection for
+long-lived objects (Old Generation).
+Why? To improve Garbage Collection (GC) efficiency.
+📌 Generations in Java
+
+Young Generation: Stores new objects.
+Old Generation: Stores long-lived objects.
+📌 Garbage Collection Cycles
+
+Minor GC Cycle: Cleans Young Generation (runs frequently).
+Major GC (Full GC) Cycle: Cleans Old Generation (runs less often).
+📌 Object Lifecycle in Generations
+
+Objects are created in the Young Generation.
+Minor GC cycles frequently clean up short-lived objects.
+Surviving objects move to the Old Generation after multiple Minor GC cycles.
+Major GC cycle runs when the Old Generation fills up, cleaning long-lived objects.
+📌 Why Is This Efficient?
+
+Separates objects based on their likelihood of removal, optimizing GC effort.
+Most objects are short-lived, so frequent Young Generation GC quickly reclaims memory.
+Old Generation objects persist longer, making frequent GC on them inefficient.
+
+Types of Garbage Collectors in Java #
+📌 1: Serial GC
+
+What? A simple, single-threaded garbage collector.
+Why? Best for small applications with low memory requirements.
+
+
+📌 2: Parallel GC (Throughput Collector)
+
+What? Uses multiple threads for garbage collection.
+When? Suitable for multi-threaded applications.
+
+
+📌 Comparison : Java Garbage Collectors
+
+GC Type	Best For	Pause Time	Threads	Introduced In
+Serial GC	Small applications	High (Stop-the-World)	Single-threaded	Java 1.0
+Parallel GC	Medium-sized apps	Medium	Multi-threaded	Java 1.3
+G1 GC	Large apps needing low latency	Low	Multi-threaded	Java 7
+ZGC	Large-scale, real-time apps	Very Low	Multi-threaded	Java 11
+
+📌 Key Difference in One Line
+
+Serial GC: "I'll stop everything and clean up memory in one go"
+Parallel GC: "I'll use multiple threads to clean up faster, but I still need to pause everything a number of times"
+
+Why is finalize() Method Deprecated in Java 9? #
+📌 What?
+
+finalize(): A method called before an object is garbage collected to perform cleanup tasks
+Why Deprecated?: Unreliable, slow, and can cause security risks
+📌 Problems with finalize():
+
+Unpredictable Execution – The JVM does not guarantee when or if finalize() will run.
+Performance Overhead – Objects with finalize() require extra GC cycles, delaying memory cleanup.
+Security Risks – Bad code can cause security risks.
+For example: Objects can be revived inside finalize(), preventing garbage collection.
+If an object assigns this to a static field or another reachable reference inside finalize(), it becomes reachable again and won’t be garbage collected.
+Java Uses Call by Value #
+Java is always "Call by Value" – for primitives, it passes values, and for objects, it passes reference copies
+
+📌 Call by Value
+
+What? A copy of the value is passed to the method.
+The original variable remains unchanged after the method call.
+Example:
+public class CallByValueExample {
+    static void modify(int num) {
+        num = num + 10;
+    }
+
+    public static void main(String[] args) {
+        int x = 20;
+        modify(x);
+        System.out.println(x); // Output: 20 (unchanged)
+    }
+}
+
+📌 Passing Objects in Java: Also Call by Value
+
+What? When an object is passed, the reference is copied, not the actual object.
+Why? The reference itself cannot be changed, but the object's internal values can be modified.
+Example:
+class Person {
+    String name;
+}
+
+public class CallByReferenceExample {
+    static void modify(Person p) {
+        p.name = "Alice"; // Modifies the object
+
+        //p = new Person();
+        //Does
+    }
+
+    public static void main(String[] args) {
+        Person person = new Person();
+        person.name = "Bob";
+        modify(person);
+        System.out.println(person.name);
+        // Output: Alice (object modified)
+    }
+}
+
+Q. object life cycle
+
+1. object creation
+Myclass obj = new Myclass();
+
+2. object in use
+obj.addFour();
+obj.getScore();
+
+3. no reference to object
+obj = null;
+
+4. JVM removes object from memory
+System.gc();
+
+5. finalize()
+runs before object is destroyd
+
+6. why java is not 100 % object oriented
+java has primitive types - int, char, double which are not objects
+
+it has static variables and methods which are belong to class not to objects
+
+Depndency injection - passing depdency from outside not creating inside
+
+class Application {
+    private Database db = new MySQLDatabase(); -> DInjection
+}
+
+using DI
+
+interface Database{
+    void connect();
+}
+
+class MySQLDatabase implements Database{
+    public void connect()
+    {
+        SOP("connected to mysql");
+    }
+}
+
+class MongpDatabase implements Database{
+    public void connect()
+    {
+        SOP("connected to mysql");
+    }
+}
+
+class Application{
+
+    private Database db;
+
+    public Application(Database db)
+    {
+        this.db = db;
+    }
+
+    public void start(){
+        db.connect();
+    }
+
+}
+
+
+
+

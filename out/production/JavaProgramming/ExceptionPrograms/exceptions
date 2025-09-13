@@ -1,0 +1,56 @@
+An Exception is an abnormal condition that occurs during the execution of a program.
+Exceptions are recoverable (usually), and the program can handle them using try-catch blocks.
+
+example:
+
+
+    try{
+        int result = 10 / 0;
+    }
+    catch(ArithmeticException e)
+    {
+        System.out.println("Cannot divide by zero!");
+    }
+
+
+An Error represents a serious problem that an application should not try to handle.
+Examples: OutOfMemoryError, StackOverflowError. Errors are thrown by the JVM, not by application code.
+Errors are unrecoverable in general.
+
+public class Test {
+    public static void main(String[] args) {
+        // Causes StackOverflowError
+        recursiveMethod();
+    }
+
+    public static void recursiveMethod() {
+        recursiveMethod();
+    }
+}
+
+------>>> Both Exception and Error extend the common parent class which is Throwable. It provides methods like
+
+getMessage()
+
+printStackTrace()
+
+getCause()
+
+Throable t = new Exception("this is throwable object");
+SOP(t.getMessage()); - this is throwable object
+
+
+1. checked exception - An exception that the compiler checks at compile-time.Trying to divide by zero,
+null pointer access, file not found, etc.
+
+2. unchecked exception - An exception that the compiler does NOT check at compile-time.
+
+| Checked Exceptions       | Unchecked Exceptions             |
+| ------------------------ | -------------------------------- |
+| `IOException`            | `NullPointerException`           |
+| `SQLException`           | `ArrayIndexOutOfBoundsException` |
+| `FileNotFoundException`  | `IllegalArgumentException`       |
+| `ClassNotFoundException` | `ArithmeticException`            |
+
+
+
