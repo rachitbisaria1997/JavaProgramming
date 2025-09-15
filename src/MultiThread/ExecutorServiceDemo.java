@@ -29,6 +29,13 @@ public class ExecutorServiceDemo extends Task{
         // Reuses a fixed number of threads → avoids overhead of creating new threads for each task.
         // Good for handling large numbers of tasks efficiently.
 
+        //Run tasks in the background without blocking the main thread.
+        //Thread pool management → Reuse a pool of worker threads instead of creating new ones.
+        // Task scheduling → Delayed and periodic execution with ScheduledExecutorService.
+        //Task submission & execution → Submit Runnable or Callable tasks, get results back with Future.
+        // Completion & termination management → Graceful shutdown using shutdown(), shutdownNow(), awaitTermination().
+
+
     }
 
 }
