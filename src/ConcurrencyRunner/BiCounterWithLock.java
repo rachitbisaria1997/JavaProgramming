@@ -12,7 +12,7 @@ public class BiCounterWithLock {
     // which helps improve performance and responsiveness
 
     Lock lockForI = new ReentrantLock();
-     Lock lockForJ = new ReentrantLock();
+    Lock lockForJ = new ReentrantLock();
 
      public void incrementI(){
          // only 1 thread can access at a time

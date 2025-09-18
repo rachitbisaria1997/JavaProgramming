@@ -1,0 +1,20 @@
+1. Minor GC - it holds the young generation of the heap where new objects are created having null refernece.
+it holds the objects which survived prev minor GC's.
+minor garbage collections happens frequently.
+
+2. major GC - happens not frequently, it can clean the old or long lived objects which have survived multiple minor GC's.
+
+3. serial garbage collectors - it uses a single thread for both minor and major GC's.
+
+ if there is a class name with MyApp.java, run the pgm using java -XX:+UseSerialGC MyApp.
+
+4. parallel garbage collectors - it uses multiple threads for minor and major GC's.
+java -XX:+UseParallelGC MyApp
+
+5. G1 garbage first collectors (G1 GC)- it divides the heap into multiple regions.
+aims for region having the most garbage first..
+java -XX:+UseG1GC MyApp
+
+6. Z garbage collectors (ZGC) -  it handles heap in terabytes, perform work concurrently.
+java -XX:+UseZGC MyApp
+
