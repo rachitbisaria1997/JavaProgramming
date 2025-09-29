@@ -43,5 +43,7 @@ class ComparableExample {
         for (Student s : students) {
             System.out.println(s);
         }
+
+        // use it when the class has a natural default order. ex String, Integer
     }
 }

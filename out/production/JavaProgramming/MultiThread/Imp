@@ -6,3 +6,36 @@ That means 200 concurrent threads can handle incoming HTTP requests by default.
 You can configure it in application.properties:
 server.tomcat.max-threads=500
 
+
+Normalization is the process of organizing database tables to:
+
+✅ Eliminate data redundancy (duplicate data).
+
+✅ Ensure data consistency and integrity.
+
+✅ Divide large tables into smaller related tables.
+
+Instead of storing customer + order + address in the same table, we separate into:
+
+Customer Table (CustomerID, Name)
+
+Address Table (AddressID, CustomerID, Address)
+
+Order Table (OrderID, CustomerID, Product, Quantity)
+
+advantages of Normalization:
+
+Advantage	Why It’s Useful
+No Data Redundancy	Saves storage and avoids duplicate data
+Data Consistency	Update data in one place reflects everywhere
+Better Data Integrity	Easier to enforce foreign key relationships
+Easier Maintenance	Smaller, simpler tables
+
+Q. What is Denormalization in DBMS?
+Denormalization is the process of combining tables to reduce the number of joins and improve read performance, at the cost of
+introducing some redundancy. Instead of keeping Customer and Address in separate tables, combine them into a single table:
+
+Advantage	Why It’s Useful
+Faster Reads	No need for multiple table joins during query
+
+

@@ -14,10 +14,11 @@ public interface CalcOperation {
     }
 }
 
-// it has only 1 abstract method. it can have default or static methods.
+// it has only 1 abstract method. it can have any num of default or static methods.
 
-// if there are more than 1 Func interface we will get compile time error.
-
+// if there are more than 1 Func interface we will get compile time error.A lambda can only be mapped to one method contract
+// — otherwise, the compiler won’t know which abstract method the lambda should implement.
+// normal interface or abstract class can have multiple abstract methods
 // default method - provides default implementation
 // static method cannt be overriden
 

@@ -33,6 +33,11 @@ public class First {
 
         System.out.println(animals);
 
+        // use comparator when we need alternate orderrings like name, age, salary or when you cannt modify the class
+        // ex
+        // Comparator<Person> byName = Comparator.comparing(Person::getName);
+        //Comparator<Person> byAgeDesc = (a,b) -> Integer.compare(b.getAge(), a.getAge());
+        //Collections.sort(list, byName);
     }
 
 }

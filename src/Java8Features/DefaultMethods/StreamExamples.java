@@ -9,6 +9,12 @@ public class StreamExamples {
 
     public static void main(String[] args) {
 
+
+        // stream provides a way to process collections in a functional, declarative and pipeline manner
+        // A stream is created from a data source:like list.stream(), arrays.stream()
+        // intermediate operations can be performed on data using map(), filer(), distinct() etc
+        //terminal operations are collect(), reduce(), count()
+
         List<Integer> numbers = Arrays.asList(2,4,6,8,10,11,12,14,15);
 
         boolean containsPrime = numbers.stream().anyMatch(StreamExamples::isPrime);

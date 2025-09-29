@@ -5,7 +5,7 @@ public class FunctionalInterfaceWithParamsDemo {
     public static void main(String[] args) {
 
         CalcOperation addition = (int x, int y) -> {
-
+    
             System.out.println("values are "+ x + ", " + y);
             return x+y;
         };
