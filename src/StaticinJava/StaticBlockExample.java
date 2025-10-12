@@ -13,6 +13,7 @@ public class StaticBlockExample {
         InitializationExample obj = new InitializationExample();
 
         // Static block executed when class is loaded
+        //It’s mainly used to initialize static variables or perform one-time setup for a class.
     }
 
 }

@@ -1,6 +1,5 @@
 package StaticinJava;
 
-import Java17Features.PatternMatching;
 
 class Parent{
     static void display(){
@@ -8,8 +7,8 @@ class Parent{
     }
 }
 
-class Child  {
-
+class Child
+{
     static void display(){
         System.out.println("Static method in Child");
     }

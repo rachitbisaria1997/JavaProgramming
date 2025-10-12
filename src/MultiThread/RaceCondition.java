@@ -36,5 +36,35 @@ public class RaceCondition {
         //expected result shud be 200, but often we get less ex 180 because both the threads are updating count at same time, overwriting each
         // others update
 
+
+        // 1. to avoid racecondition use synchronized blocks
+        //public synchronized void increment() {
+        //        count++;
+        //    }
+        //
+        //    public synchronized int getCount() {
+        //        return count;
+        //    }
+
+
+        // 2. use Locks.
+//        private int count = 0;
+//        private final ReentrantLock lock = new ReentrantLock();
+//
+//        public void increment() {
+//            lock.lock();
+//            try {
+//                count++;
+//            } finally {
+//                lock.unlock();
+//            }
+//        }
+//
+//        public int getCount() {
+//            return count;
+//        }
+
+       // 3. use atomic integers.
+        // 4. use ConcurrentHashMap, CopyOnWriteArrayList
     }
 }

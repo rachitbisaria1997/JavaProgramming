@@ -28,10 +28,6 @@ public class WrapperClass {
         Integer objj = new Integer(20);
         int numm = objj;
 
-
-
-
-
     }
 
 }
