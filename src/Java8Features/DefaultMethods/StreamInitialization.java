@@ -114,7 +114,6 @@ public class StreamInitialization {
         ));
 
         System.out.println(countOfEmpGenderWise);
-
         // summing all emp salaries
         System.out.println(employees.stream().collect(Collectors.summingDouble(Employee::getSalary)));
 

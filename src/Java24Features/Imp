@@ -1,0 +1,9 @@
+
+
+1. Performance and memory management
+old and new objects are seperated. young objects are cleaned frequently, old are stored and cleaned less frequently
+
+2. ahead of time class loading - some of the work the JVM normally does at runtime — like bytecode verification, linking, and JIT compilation — is done in advance.
+
+3. new import syntax -> import module moduleName;
+ex -> import module java.sql;
