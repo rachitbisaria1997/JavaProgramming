@@ -29,7 +29,7 @@ public class StaticOveriding {
         // Cannot participate in runtime polymorphism → Cannot be overridden.
 
         //Method overriding happens at runtime (dynamic polymorphism).
-        // static methods are resolved at runtime hence they cant be overrided
+        // static methods are resolved at compile hence they cant be overrided
 
 
     }

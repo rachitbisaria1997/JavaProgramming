@@ -1,6 +1,6 @@
 package Modifiers;
 
- class Parent {
+class Parent {
 
      protected void show() {
          System.out.println("Protected method");

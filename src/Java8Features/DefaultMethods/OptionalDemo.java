@@ -2,7 +2,7 @@ package Java8Features.DefaultMethods;
 
 import java.util.Optional;
 
-public class    OptionalDemo {
+public class OptionalDemo {
 
     public static void main(String[] args) {
 

@@ -4,15 +4,20 @@ public class VirtualThreads {
 
     public static void main(String[] args) {
 
-//        a lightweight thread type that simplifies writing and maintaining high-throughput applications.
-//        While it requires around 1Mb to create a traditional thread(or platform thread), a virtual thread only requires around 1Kb of memory.
+        //number of threads are limited. to achieve high throughput concurrnecy, we use virtual threads
+        // which are light weight and helps in achieving high throughput
 
-//        Thread thread = Thread.ofVirtual().start(() -> {
-//            System.out.println("Hello from a virtual thread!");
-//          });
+
+        Runnable task = () -> {
+            System.out.println("running in thread" + Thread.currentThread().getName());
+        };
+
 //
-//        System.out.println(thread.isVirtual());//True
+//        Thread.startVirtualThread(task);
+//
+//        Thread virtualThread = Thread.ofVirtual().start(task);
 
+        // light weight threads help us to achieve high throughput concurrent applications
 
     }
 

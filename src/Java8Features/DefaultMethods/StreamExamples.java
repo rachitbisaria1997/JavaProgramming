@@ -29,7 +29,7 @@ public class StreamExamples {
 
 
         // find longest string in a list of strings
-            List<String> strings = Arrays
+        List<String> strings = Arrays
                         .asList("apple", "banana", "cherry", "date", "grapefruit");
 
         Optional<String> longestString = strings.stream().max(Comparator.comparingInt(String::length));
