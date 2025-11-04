@@ -12,7 +12,8 @@ class ArrayListDemo {
        arrayList.add("Spring");
        arrayList.add("Hibernate");
 
-       System.out.println("ArrayList: " + arrayList);
+       System.out.println("ArrayList: " + arrayList); // Java Spring Hibernate. it maintains insertion order, not thread safe
+       // accessing element is fast if index is known
 
    }
 

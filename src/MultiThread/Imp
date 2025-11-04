@@ -88,4 +88,8 @@ introducing some redundancy. Instead of keeping Customer and Address in separate
 Advantage	Why It’s Useful
 Faster Reads	No need for multiple table joins during query
 
+        // thread.start() - starts a new thread of execution, it creates a new seperate thread
+        // code inside the run method executed concurrently with other threads
 
+        // thread.run() - calls the run method like a normal function call. code executes sequentially in same thread
+        // no new thread is created. runs in main thread

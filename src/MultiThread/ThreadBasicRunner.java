@@ -12,6 +12,7 @@ class Task1 extends Thread{
         }
         System.out.println("\nTask1 done");
     }
+    // run method defines the work or task the thread will perform
 }
 
 class Task2 extends Thread{
@@ -46,6 +47,11 @@ public class ThreadBasicRunner {
 
         // task 3 starts once task1 is completed
         // parrallism is achieved using threads
+        // thread.start() - starts a new thread of execution, it creates a new seperate thread
+        // code inside the run method executed concurrently with other threads
+
+        // thread.run() - calls the run method like a normal function call. code executes sequentially in same thread
+        // no new thread is created. runs in main thread
 
         System.out.println("task 3 started");
         for(int i=301; i<=399; i++){
