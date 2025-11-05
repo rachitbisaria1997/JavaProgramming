@@ -8,8 +8,6 @@ public class PredicateDemo {
 
         System.out.println(ageCheck.test(44));
 
-
-
     }
 
 }

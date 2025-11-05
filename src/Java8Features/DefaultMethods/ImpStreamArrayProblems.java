@@ -1,6 +1,7 @@
 package Java8Features.DefaultMethods;
 
 import  java.util.*;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
@@ -104,6 +105,7 @@ public class StreamArrayProblems {
 
         List<Integer> reducednums = Arrays.asList(1,2,3,4,5,6);
         Optional<Integer> redResult = reducednums.stream().reduce((a, b) -> a *b);
+        // another way int resRes = reducednums.stream().reduce(0, (a,b) -> a + b);
         System.out.println(redResult);
 
         // check if all nums are positive
