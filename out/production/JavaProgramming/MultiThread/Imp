@@ -1,3 +1,49 @@
+Multithreading in Java is a programming concept that allows multiple parts of a program (called threads) to run concurrently —
+i.e., at the same time — to make better use of  CPU resources and improve performance, especially in applications that perform many
+tasks simultaneously.
+Multithreading is the ability of a CPU (or a single program) to execute multiple threads
+independently but within the same process, sharing the same memory space.
+
+1. Improves performance by executing tasks in parallel
+2. Better CPU utilization
+
+Term	     Description
+Thread	     Smallest unit of execution within a process.
+Process  	 An executing instance of a program. A process can contain multiple threads.
+Main Thread	 The first thread started when a Java program runs (executes the main() method).
+Concurrency	 Executing multiple tasks at the same time (not necessarily simultaneously).
+Parallelism	 Actually running multiple tasks at the same instant (on multi-core CPUs).
+
+
+A thread goes through several states:
+
+New – Thread object created, but not started.
+
+Runnable – Thread is ready to run or running.
+
+Blocked/Waiting – Waiting for a resource or another thread.
+
+Timed Waiting – Waiting for a specific time period.
+
+Terminated – Thread has finished execution.
+
+start()	Starts a new thread and calls run() method.
+run()	Defines the code executed by the thread.
+sleep(ms)	Makes thread sleep for given milliseconds.
+join()	Waits for another thread to complete.
+yield()	Pauses current thread to let others execute.
+isAlive()	Checks if the thread is still running.
+
+Real-World Examples
+
+Web servers handling multiple requests
+
+Background tasks (file upload/download)
+
+Game loops (rendering, physics, input)
+
+Parallel data processing
+
 By default, Spring Boot uses an embedded Tomcat server.
 
 maxThreads = 200
@@ -6,6 +52,10 @@ That means 200 concurrent threads can handle incoming HTTP requests by default.
 You can configure it in application.properties:
 server.tomcat.max-threads=500
 
+
+Thread -A worker which works on the task
+
+Task - A unit of work — the logic/code that needs to be executed.
 
 Normalization is the process of organizing database tables to:
 
@@ -38,4 +88,8 @@ introducing some redundancy. Instead of keeping Customer and Address in separate
 Advantage	Why It’s Useful
 Faster Reads	No need for multiple table joins during query
 
+        // thread.start() - starts a new thread of execution, it creates a new seperate thread
+        // code inside the run method executed concurrently with other threads
 
+        // thread.run() - calls the run method like a normal function call. code executes sequentially in same thread
+        // no new thread is created. runs in main thread

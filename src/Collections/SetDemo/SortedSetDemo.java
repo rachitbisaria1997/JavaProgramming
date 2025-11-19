@@ -13,6 +13,7 @@ public class SortedSetDemo {
         sortedSet.add("Orange");
 
         System.out.println(sortedSet);  // Output: [Apple, Banana, Orange]
+        // it is Fail-Fast Iterator
 
     }
 }

@@ -23,6 +23,7 @@ public class SetOverview {
         set.clear();
 
         // for thread safety use concurrent skip list
+        // it is Fail-Fast Iterator
         Set<Integer> set1 = new ConcurrentSkipListSet<>();
         // Stores unique elements (no duplicates allowed).
 

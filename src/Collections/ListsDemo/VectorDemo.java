@@ -15,6 +15,8 @@ public class VectorDemo {
 
         //  synchronized version of ArrayList
 
+        //it is Fail-Fast Iterator
+
     }
 
 }

@@ -16,6 +16,7 @@ public class LinkedHashSetExample {
 
         //Maintains insertion order.
         //Output: [Apple, Banana, Orange]
+        // it is Fail-Fast Iterator
     }
 
 }

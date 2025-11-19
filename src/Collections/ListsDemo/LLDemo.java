@@ -17,6 +17,7 @@ public class LLDemo {
 
         //LinkedList – fast insertion/deletion, not thread-safe
         // access is slow,must traverse entire list
+        // it is Fail-Fast Iterator
     }
     
 

@@ -36,6 +36,8 @@ public class ConcurrenthashMapDemp {
         //has to acquire the lock of that bucket and enter into it. Only one thread can enter into a bucket at any given time.
         //Other threads which want to write on the same bucket have to wait. But, read operations are lock free. Any thread wants
         //to read from a bucket, it can do so without acquiring the lock of that bucket.
+
+        //it is fail safe iterator never throw ConcurrentModificationException
     }
 
 }

@@ -15,6 +15,12 @@ class ArrayListDemo {
        System.out.println("ArrayList: " + arrayList); // Java Spring Hibernate. it maintains insertion order, not thread safe
        // accessing element is fast if index is known
 
+       List<Integer> list = new ArrayList<>(List.of(1, 2, 3));
+       for(Integer i : list) {
+           list.add(4); // will throw ConcurrentModificationException
+       }
+       // it is Fail-Fast Iterator
+
    }
 
 }

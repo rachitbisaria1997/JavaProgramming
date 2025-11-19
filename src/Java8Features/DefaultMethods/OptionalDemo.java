@@ -82,6 +82,16 @@ public class OptionalDemo {
 
         System.out.println(verifiedContainer.get());
 
+        Optional<String> namee = Optional.ofNullable(null);
+
+        namee.ifPresent(n -> System.out.println("name is " + n));
+
+        String resultt = namee.orElse("no name provided");
+        System.out.println(resultt);
+
+        Optional<String> city = Optional.of("delhi");
+        System.out.println(city.get());
+
     }
 
     public static Optional<String> getName(){

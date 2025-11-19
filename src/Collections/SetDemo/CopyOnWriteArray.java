@@ -26,7 +26,7 @@ public class CopyOnWriteArray {
         }
         // on read, reads are lock free and fast.
         // on write (add/remove/set) - it takes a lock, clones the entire array applies mutation to clone then sets reference to new array
-
+        // it is fail safe iterators
     }
 
 }
