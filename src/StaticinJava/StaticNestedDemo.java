@@ -20,6 +20,7 @@ public class StaticNestedDemo {
         B obj = new B();
         obj.show();
 
+        // object of static class be created by extending
     }
 
 }
