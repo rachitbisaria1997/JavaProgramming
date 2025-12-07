@@ -37,7 +37,7 @@ int secondHighestMarks = sortedDistinctMarks.get(1);
 
 List<String> names = students.stream().filter(s -> s.getMarks() == secondHighestMarks).map(Student::getName).collect(Collectors.toList());
 
-System.out.println("Student(s) with second highest marks:");
-
-names.forEach(System.out::println);
+//System.out.println("Student(s) with second highest marks:");
+//
+//names.forEach(System.out::println);
 

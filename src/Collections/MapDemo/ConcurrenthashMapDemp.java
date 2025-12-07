@@ -38,6 +38,19 @@ public class ConcurrenthashMapDemp {
         //to read from a bucket, it can do so without acquiring the lock of that bucket.
 
         //it is fail safe iterator never throw ConcurrentModificationException
+
+
+        for(String key : map.keySet()){
+
+            if(key.equals("A")){
+                map.remove("A");
+            }
+
+        }
+
+
+        System.out.println(map);
+        // {B=1, C=1}
     }
 
 }

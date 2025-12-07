@@ -1,6 +1,6 @@
 package Java8Features.DefaultMethods;
 
-public class Employee {
+public class Employeee {
 
     public int getId() {
         return id;
