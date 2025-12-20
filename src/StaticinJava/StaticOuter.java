@@ -14,6 +14,11 @@ public class StaticOuter {
     }
 }
 
+//Java does not allow a top-level class to be static.
+//But inside another class, you can create a static nested class.
+
+// a static nested class belongs to outer class not an object. can be accessed without creating object of outer class
+
 class Test{
 
     public static void main(String[] args) {

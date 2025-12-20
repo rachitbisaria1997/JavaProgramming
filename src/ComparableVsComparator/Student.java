@@ -1,4 +1,4 @@
-package AnonymousClassRunner;
+package ComparableVsComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

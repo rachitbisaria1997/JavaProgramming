@@ -1,6 +1,7 @@
 package Strings;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Dates {
 
@@ -14,6 +15,11 @@ public class Dates {
         System.out.println(today.getMonth());
 
         System.out.println(today.isLeapYear());
+
+        LocalDateTime localDateTime = null;
+
+        System.out.println(localDateTime.now());
+        System.out.println(localDateTime.getDayOfMonth());
 
 
     }

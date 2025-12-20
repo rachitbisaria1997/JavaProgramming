@@ -12,6 +12,14 @@ public class SequencedCollection {
         //reversed()
 
         List<String> names = new ArrayList<>(List.of("Alice", "Bob", "Charlie"));
+        // List is a interface, Arraylist implements List and below also
+        // ArrayList
+        //
+        //LinkedList
+        //
+        //Vector
+        //
+        //Stack
 
        // System.out.println("First: " + names.getFirst()); // Alice
       //  System.out.println("Last: " + names.getLast());   // Charlie

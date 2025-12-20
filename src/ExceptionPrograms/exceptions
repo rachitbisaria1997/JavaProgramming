@@ -52,5 +52,109 @@ null pointer access, file not found, etc.
 | `FileNotFoundException`  | `IllegalArgumentException`       |
 | `ClassNotFoundException` | `ArithmeticException`            |
 
+NEW → RUNNABLE → (WAITING / TIMED_WAITING / BLOCKED) → RUNNABLE → TERMINATED
+
+
+Thread is created but not started yet.
+
+Exists before calling start().
+
+Example:
+
+Thread t = new Thread(() -> {});
+System.out.println(t.getState()); // NEW
+
+✅ 2. RUNNABLE
+
+Thread is ready to run OR running.
+
+JVM scheduler decides when it gets CPU.
+
+Includes both:
+
+Running
+
+Ready-to-run (waiting for CPU)
+
+Example:
+
+t.start(); // moves from NEW → RUNNABLE
+
+✅ 3. BLOCKED
+
+Thread is waiting to acquire a monitor lock.
+
+Happens during synchronized block/method when another thread holds the lock.
+
+Example:
+
+synchronized(obj) {
+    // thread acquired lock
+}
+
+
+Another thread trying the same lock → BLOCKED.
+
+✅ 4. WAITING
+
+Thread is waiting indefinitely for another thread to perform an action.
+
+Happens when using:
+
+Object.wait()
+
+Thread.join() (without timeout)
+
+LockSupport.park()
+
+Example:
+
+synchronized(obj) {
+    obj.wait(); // WAITING
+}
+
+
+Thread leaves WAITING when:
+
+notify()
+
+notifyAll()
+
+Another thread terminates (in case of join)
+
+✅ 5. TIMED_WAITING
+
+Thread is waiting for a specified time.
+
+Occurs when using:
+
+Thread.sleep(1000)
+
+Object.wait(1000)
+
+Thread.join(1000)
+
+LockSupport.parkNanos()
+
+LockSupport.parkUntil()
+
+Example:
+
+Thread.sleep(3000); // TIMED_WAITING
+
+✅ 6. TERMINATED
+
+Thread has completed execution.
+
+Either:
+
+finished normally, OR
+
+terminated due to exception
+
+Example:
+
+t.run(); // after completion → TERMINATED
+
 
 

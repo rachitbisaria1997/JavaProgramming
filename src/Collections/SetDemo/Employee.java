@@ -48,6 +48,9 @@ public class Employee {
                 salary == e.salary &&
                 department.equals(e.department);
     }
+    // by default equals() also checks memory ref like == operator.. equals() method can be overrided but not == operator
+    // by equals() method its default behaviour can be overrided to check content instead of memory ref
+    //  string overrides equals method as its compares value.. a = "abc", b = "abc" a.equals(b) -> true
 
     @Override
     public int hashCode() {
